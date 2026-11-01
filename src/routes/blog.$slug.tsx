@@ -1,0 +1,5 @@
+import { createFileRoute, Link, notFound } from '@tanstack/react-router';
+import { getPost } from '../lib/posts';
+import { metadata } from '../lib/metadata';
+export const Route = createFileRoute('/blog/$slug')({ loader: ({ params }) => { const post = getPost(params.slug); if (!post) throw notFound(); return post; }, head: ({ loaderData }) => metadata(loaderData?.title ?? 'Статья не найдена', loaderData?.description ?? 'Статья не найдена.', 'article'), component: BlogPost });
+function BlogPost() { const post = Route.useLoaderData(); return <main className="page-content"><article className="post"><Link to="/" className="read-link">← Все статьи</Link><p className="eyebrow">{post.category}</p><h1>Статья: {post.slug}</h1><p className="post-subtitle">{post.title}</p><img className="post-image" src={post.slug === 'react-osnovy' ? '/images/react.svg' : '/images/next.svg'} alt={post.title} /><div className="post-body">{post.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div></article></main>; }

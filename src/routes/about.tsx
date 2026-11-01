@@ -1,0 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { Counter } from '../components/counter';
+import { metadata } from '../lib/metadata';
+export const Route = createFileRoute('/about')({ loader: async () => ({ title: 'О проекте', description: 'Мой первый учебный мини-блог о веб-разработке.' }), head: () => metadata('О проекте', 'Учебный мини-блог и интерактивный счётчик.'), component: About });
+function About() { const info = Route.useLoaderData(); return <main className="page-content"><section className="page-intro"><p className="eyebrow">PRNEXT / 01</p><h1>{info.title}<span className="primary">.</span></h1><p className="intro-copy">{info.description}</p></section><section className="about-section"><h2>Маленький проект.<br />Первые большие шаги.</h2><div><p>Две статьи, общая навигация и немного интерактивности. Здесь я изучаю компоненты, состояние и маршрутизацию.</p><div className="counter-area"><h3>Счётчик</h3><Counter /></div><a className="read-link" href="/api/hello">/api/hello ↗</a></div></section></main>; }
